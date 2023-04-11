@@ -61,7 +61,7 @@ public class ContactManager {
         //prompt the user to enter a contact
         boolean x = false;
         while(!x) {
-            System.out.println("Enter a name and phone number: ");
+            System.out.println("Enter a name and phone number. ex: john doe 1234567890");
             String userContact = userInput.nextLine();
             List<String> myData = List.of(userContact);
             List<String> listInfo = Files.readAllLines(namesAndNumbers);
