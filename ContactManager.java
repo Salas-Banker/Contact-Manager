@@ -18,19 +18,12 @@ public class ContactManager {
 
     public static void main(String[] args) throws IOException {
         contactApp();
-//        int y = startingMenu();
-
-//        switch (y) {
-//            case 1 -> viewContacts();
-//            case 2 -> addContact();
-//            case 3 -> searchContact();
-//            case 4 -> deleteContact();
-//        }
     }
 
     public static void contactApp() throws IOException {
-        int y = startingMenu();
+        boolean confirm;
         do {
+        int y = startingMenu();
             switch (y) {
                 case 1 -> viewContacts();
                 case 2 -> addContact();
@@ -40,7 +33,9 @@ public class ContactManager {
                     break;
                 }
             }
-        } while(true);
+            System.out.println("Would you like to continue? Enter yes or no.");
+            confirm = userInput.nextLine().equalsIgnoreCase("Yes");
+        } while(confirm);
     }
 
 
@@ -58,6 +53,7 @@ public class ContactManager {
     public static void viewContacts() throws IOException {
         Path namesAndNumbers = Paths.get("contacts.txt");
         List<String> listInfo = Files.readAllLines(namesAndNumbers);
+
         for (String i : listInfo) {
             System.out.printf("%n%s", i);
         }
