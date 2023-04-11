@@ -59,10 +59,22 @@ public class ContactManager {
 
     public static void addContact() throws IOException {
         //prompt the user to enter a contact
-        System.out.println("Enter a name and phone number: ");
-        String userContact = userInput.nextLine();
-        List<String> myData = List.of(userContact);
-        Files.write(namesAndNumbers, myData, StandardOpenOption.APPEND);
+        boolean x = false;
+        while(!x) {
+            System.out.println("Enter a name and phone number: ");
+            String userContact = userInput.nextLine();
+            List<String> myData = List.of(userContact);
+            List<String> listInfo = Files.readAllLines(namesAndNumbers);
+            if (listInfo.contains(userContact)) {
+                System.out.printf("Contact already exists %s, would you like to add another? yes or no", userContact);
+                if(userInput.nextLine().equalsIgnoreCase("No")) {
+                    x = true;
+                }
+            } else {
+                Files.write(namesAndNumbers, myData, StandardOpenOption.APPEND);
+                x = true;
+            }
+        }
     }
 
     public static void searchContact() throws IOException {
@@ -71,7 +83,6 @@ public class ContactManager {
         String whatUserSearched = userInput.nextLine();
         for (String i : listInfo) {
             if (i.toLowerCase().contains(whatUserSearched)) {
-
                 System.out.printf("%n%s", i);
             }
         }
