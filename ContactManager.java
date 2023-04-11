@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ContactManager {
+
     public static void main(String[] args) throws IOException {
         Path namesAndNumbers = Paths.get("contacts.txt");
         List<String> listInfo = Files.readAllLines(namesAndNumbers);
@@ -58,14 +59,20 @@ public class ContactManager {
             Scanner deleteContact = new Scanner(System.in);
             System.out.println("Please give the name or number you wish to delete: ");
             String userDeletedContact = deleteContact.nextLine();
-            for(String i : listInfo) {
-                if (userDeletedContact.toLowerCase().equals(i)) {
-                    String x = i.replaceAll(userDeletedContact, " ");
-                i.append(i.replaceAll(userDeletedContact, " "));
-                }
+            System.out.println(listInfo.remove(userDeletedContact));
+            listInfo.remove(userDeletedContact);
+//            listInfo.remove(int indexOf(userDeletedContact));
+            for (String i : listInfo) {
+                System.out.printf("%n%s", i);
             }
+            Files.write(namesAndNumbers, listInfo);
+//            Files.write(namesAndNumbers, listInfo, StandardOpenOption.APPEND);
 
-
+//            for(String i : listInfo) {
+//                if (userDeletedContact.toLowerCase().equals(i)) {
+//                    String x = i.replaceAll(userDeletedContact, " ");
+//                }
+//            }
         }
     }
 }
