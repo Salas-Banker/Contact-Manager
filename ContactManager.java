@@ -13,9 +13,6 @@ public class ContactManager {
     static Scanner userIntInput = new Scanner(System.in);
     static Path namesAndNumbers = Paths.get("contacts.txt");
 
-
-
-
     public static void main(String[] args) throws IOException {
         contactApp();
     }
@@ -33,7 +30,7 @@ public class ContactManager {
                     break;
                 }
             }
-            System.out.println("Would you like to continue? Enter yes or no.");
+            System.out.println("\nWould you like to continue? Enter yes or no.");
             confirm = userInput.nextLine().equalsIgnoreCase("Yes");
         } while(confirm);
     }
@@ -53,9 +50,10 @@ public class ContactManager {
     public static void viewContacts() throws IOException {
         Path namesAndNumbers = Paths.get("contacts.txt");
         List<String> listInfo = Files.readAllLines(namesAndNumbers);
-
+        System.out.printf("%n%-21s | %s |", "Name", "Phone Number");
         for (String i : listInfo) {
-            System.out.printf("%n%s", i);
+            String[] lineSplit = i.split(" ");
+            System.out.printf("%n%-10s %-10s | %-10s |", lineSplit[0], lineSplit[1], lineSplit[2]);
         }
     }
 
@@ -73,6 +71,7 @@ public class ContactManager {
         String whatUserSearched = userInput.nextLine();
         for (String i : listInfo) {
             if (i.toLowerCase().contains(whatUserSearched)) {
+
                 System.out.printf("%n%s", i);
             }
         }
@@ -92,6 +91,5 @@ public class ContactManager {
             }
         }
     }
-
 }
 
