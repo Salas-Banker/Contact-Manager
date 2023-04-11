@@ -54,6 +54,18 @@ public class ContactManager {
                     System.out.printf("%n%s", i);
                 }
             }
+        } else if(numberPicked.trim().equals("4")) {
+            Scanner deleteContact = new Scanner(System.in);
+            System.out.println("Please give the name or number you wish to delete: ");
+            String userDeletedContact = deleteContact.nextLine();
+            for(String i : listInfo) {
+                if (userDeletedContact.toLowerCase().equals(i)) {
+                    String x = i.replaceAll(userDeletedContact, " ");
+                i.append(i.replaceAll(userDeletedContact, " "));
+                }
+            }
+
+
         }
     }
 }
