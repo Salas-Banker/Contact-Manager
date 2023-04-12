@@ -20,7 +20,7 @@ public class ContactManager {
     public static void contactApp() throws IOException {
         boolean confirm;
         do {
-        int y = startingMenu();
+            int y = startingMenu();
             switch (y) {
                 case 1 -> viewContacts();
                 case 2 -> addContact();
@@ -32,7 +32,7 @@ public class ContactManager {
             }
             System.out.println("\nWould you like to try something else? Enter yes or no.");
             confirm = userInput.nextLine().equalsIgnoreCase("Yes");
-        } while(confirm);
+        } while (confirm);
     }
 
 
@@ -60,19 +60,44 @@ public class ContactManager {
     public static void addContact() throws IOException {
         //prompt the user to enter a contact
         boolean x = false;
-        while(!x) {
-            System.out.println("Enter a name and phone number. ex: john doe 1234567890");
+        while (!x) {
+            System.out.println("Enter a valid name and phone number. ex: john doe 1234567890");
             String userContact = userInput.nextLine();
+            String[] inputContact = userContact.trim().split(" ");
+            boolean isNum = false;
+            boolean isChar = false;
+            //checks if either the first name or last name contains a number
+            for (int i = 0; i < 2; i++) {
+                String a = inputContact[i];
+                char[] chars = a.toCharArray();
+                for (char l : chars) {
+                    if(Character.isDigit(l)) {
+                        isNum = true;
+                    }
+                }
+            }
+            //checks to see if the phone number contains a letter
+            char[] chars = inputContact[2].toCharArray();
+            for(char i : chars){
+                if(!Character.isDigit(i)) {
+                    isChar = true;
+                }
+            }
+            System.out.println(isNum);
             List<String> myData = List.of(userContact);
             List<String> listInfo = Files.readAllLines(namesAndNumbers);
-            if (listInfo.contains(userContact)) {
-                System.out.printf("Contact %s already exists, would you like to add another? yes or no", userContact);
-                if(userInput.nextLine().equalsIgnoreCase("No")) {
+            if(!isNum && !isChar) {
+                if (listInfo.contains(userContact)) {
+                    System.out.printf("Contact %s already exists, would you like to add another? yes or no", userContact);
+                    if (userInput.nextLine().equalsIgnoreCase("No")) {
+                        x = true;
+                    }
+                } else {
+                    Files.write(namesAndNumbers, myData, StandardOpenOption.APPEND);
                     x = true;
                 }
             } else {
-                Files.write(namesAndNumbers, myData, StandardOpenOption.APPEND);
-                x = true;
+                System.out.println("That was an invalid input. Please make sure there is a first name and a second name consisting of only letters and that the phone number consist of only numbers.");
             }
         }
     }
@@ -92,7 +117,7 @@ public class ContactManager {
         List<String> listInfo = Files.readAllLines(namesAndNumbers);
         boolean x = false;
         System.out.println("Please give the first and last name and number you wish to delete: ");
-        while(!x) {
+        while (!x) {
             String userDeletedContact = userInput.nextLine();
             if (listInfo.remove(userDeletedContact)) {
                 Files.write(namesAndNumbers, listInfo);
