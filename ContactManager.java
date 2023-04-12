@@ -30,7 +30,7 @@ public class ContactManager {
                     break;
                 }
             }
-            System.out.println("\nWould you like to continue? Enter yes or no.");
+            System.out.println("\nWould you like to try something else? Enter yes or no.");
             confirm = userInput.nextLine().equalsIgnoreCase("Yes");
         } while(confirm);
     }
@@ -61,12 +61,12 @@ public class ContactManager {
         //prompt the user to enter a contact
         boolean x = false;
         while(!x) {
-            System.out.println("Enter a name and phone number: ");
+            System.out.println("Enter a name and phone number. ex: john doe 1234567890");
             String userContact = userInput.nextLine();
             List<String> myData = List.of(userContact);
             List<String> listInfo = Files.readAllLines(namesAndNumbers);
             if (listInfo.contains(userContact)) {
-                System.out.printf("Contact already exists %s, would you like to add another? yes or no", userContact);
+                System.out.printf("Contact %s already exists, would you like to add another? yes or no", userContact);
                 if(userInput.nextLine().equalsIgnoreCase("No")) {
                     x = true;
                 }
