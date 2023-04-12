@@ -67,7 +67,7 @@ public class ContactManager {
             boolean isNum = false;
             boolean isChar = false;
             //checks if either the first name or last name contains a number
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < inputContact.length -1; i++) {
                 String a = inputContact[i];
                 char[] chars = a.toCharArray();
                 for (char l : chars) {
@@ -77,16 +77,15 @@ public class ContactManager {
                 }
             }
             //checks to see if the phone number contains a letter
-            char[] chars = inputContact[2].toCharArray();
+            char[] chars = inputContact[inputContact.length -1].toCharArray();
             for(char i : chars){
                 if(!Character.isDigit(i)) {
                     isChar = true;
                 }
             }
-            System.out.println(isNum);
             List<String> myData = List.of(userContact);
             List<String> listInfo = Files.readAllLines(namesAndNumbers);
-            if(!isNum && !isChar) {
+            if(!isNum && !isChar && inputContact.length == 3) {
                 if (listInfo.contains(userContact)) {
                     System.out.printf("Contact %s already exists, would you like to add another? yes or no", userContact);
                     if (userInput.nextLine().equalsIgnoreCase("No")) {
