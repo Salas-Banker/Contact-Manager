@@ -18,7 +18,7 @@ public class ContactManager {
     }
 
     public static void contactApp() throws IOException {
-        boolean confirm;
+        boolean confirm = true;
         do {
             int y = startingMenu();
             switch (y) {
@@ -27,17 +27,20 @@ public class ContactManager {
                 case 3 -> searchContact();
                 case 4 -> deleteContact();
                 case 5 -> {
-                    break;
+                    System.out.println("Have a good one");
+                    confirm = false;
                 }
             }
-            System.out.println("\nWould you like to try something else? Enter yes or no.");
-            confirm = userInput.nextLine().equalsIgnoreCase("Yes");
+            if(confirm) {
+                System.out.println("\nWould you like to try something else? Enter yes or no.");
+                confirm = userInput.nextLine().equalsIgnoreCase("Yes");
+            }
         } while (confirm);
     }
 
 
     public static int startingMenu() {
-        System.out.println("1. View contacts.\n" +
+        System.out.println("1. View All contacts.\n" +
                 "2. Add a new contact.\n" +
                 "3. Search a contact by name.\n" +
                 "4. Delete an existing contact.\n" +
